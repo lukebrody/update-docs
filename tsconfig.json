@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "target": "ES2021",
+    "strict": true,
+    "declaration": true,
+    "moduleResolution": "Node",
+    "module": "ESNext",
+    "lib": [
+      "ES2021"
+    ],
+    "allowSyntheticDefaultImports": true,
+  },
+  "include": [
+    "lib/**/*"
+  ],
+  "exclude": [
+    "lib/**/*.test.tsx"
+  ]
+}
