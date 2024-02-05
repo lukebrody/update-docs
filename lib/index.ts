@@ -14,7 +14,7 @@ type File = { readonly path: string; contents: string }
  * 1. Use {@link collectExamples} to scan through test files and collect code between
  * `// start docs Example Name`
  * and
- * `// end docs`
+ * `// end docs Example Name`
  * comments. Multiple blocks for the same example will be concatenated.
  *
  * 1. Use {@link replaceExamples} to scan through documentation files and update code blocks
@@ -105,7 +105,7 @@ export class UpdateDocs {
 	 * Override this method to change what test file code blocks look like.
 	 */
 	codeBlockInTests(): RegExp {
-		return /(?:^|\n)([^\S\n]*)\/\/ start docs (.+?)\n(.+?)\n[^\S\n]*\/\/ end docs/gs
+		return /(?:^|\n)([^\S\n]*)\/\/ start docs (.+?)\n(.+?)\n[^\S\n]*\/\/ end docs \2/gs
 	}
 
 	/**
@@ -116,13 +116,18 @@ export class UpdateDocs {
 	collectExamples(): DefaultMap<string, string[]> {
 		const result = new DefaultMap<string, string[]>(() => [])
 
-		for (const { contents } of this.testFiles) {
-			for (const [, indent, exampleName, code] of contents.matchAll(
+		const scan = (text: string) => {
+			for (const [, indent, exampleName, code] of text.matchAll(
 				this.codeBlockInTests(),
 			)) {
 				const dedentedCode = code.replaceAll(new RegExp(`^${indent}`, 'gm'), '')
 				result.get(exampleName).push(dedentedCode)
+				scan(dedentedCode)
 			}
+		}
+
+		for (const { contents } of this.testFiles) {
+			scan(contents)
 		}
 
 		return result
@@ -183,17 +188,16 @@ export class UpdateDocs {
 	): void {
 		const pattern = this.exampleRegex(exampleName)
 		const stringValue = this.stringifyValue(value)
-		let count = 0
 		for (const file of this.documentationFiles) {
 			file.contents = file.contents.replaceAll(pattern, (...args) => {
 				const [, header, content, end] = args as string[]
-				count += Array.from(content.matchAll(token as RegExp)).length
+				const count = Array.from(content.matchAll(token as RegExp)).length 
+				if (count !== 1) {
+					throw new Error(`token ${token} appeared ${count} times`)
+				}
 				const replacedContent = content.replaceAll(token, stringValue)
 				return [header, replacedContent, end].join('')
 			})
-		}
-		if (count !== 1) {
-			throw new Error(`token ${token} appeared ${count} times`)
 		}
 	}
 }

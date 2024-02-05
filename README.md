@@ -18,9 +18,9 @@ npm install -D update-docs
 ### 1. Label code blocks in your documentation
 
 ````markdown
-<!---My Code Block-->
+<!---My Code⠀Block-->
 
-```javascript
+```typescript
 
 ```
 ````
@@ -56,8 +56,17 @@ test("addition", () => {
   sum; // {{sum}}
   // end docs My Code Block
   expect(sum).toBe(4);
-  docs.replaceToken("My Code Block", "{{sum}}", sum.toString());
+  docs.replaceToken("My Code Block", "{{" + "sum" + "}}", sum.toString());
 });
+```
+
+### My Code Block
+
+<!---My Code Block-->
+
+```typescript
+const sum = 2 + 2;
+sum; // 4
 ```
 
 ### That's it!
@@ -67,3 +76,5 @@ Now, when your run your test, `UpdateDocs` will update the code samples in your 
 See the [`UpdateDocs` class](docs/classes/UpdateDocs.html) for more API documentation.
 
 This README is generated using `update-docs`! See [README.test.ts](test/README.test.ts) for that implementation.
+
+(P.S. You can repeat the same code block name in multiple files to keep them in sync.)

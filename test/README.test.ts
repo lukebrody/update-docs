@@ -15,20 +15,17 @@ beforeAll(() => {
 // end docs readme-setup
 // start docs readme-test-case
 test('addition', () => {
-	// start-docs My Code Block
+	// start docs My Code Block
 	const sum = 2 + 2
 	sum // {{sum}}
-	// end-docs My Code Block
+	// end docs My Code Block
 	expect(sum).toBe(4)
-	docs.replaceToken('My Code Block 2', '{{sum}}', sum.toString())
+	docs.replaceToken('My Code Block', '{{' + 'sum' + '}}', sum.toString())
 })
 // end docs readme-test-case
 
 afterAll(() => {
 	docs.replaceToken('readme-setup', '../lib/index', 'update-docs')
-	docs.replaceToken('readme-test-case', 'start-docs', 'start docs')
-	docs.replaceToken('readme-test-case', 'end-docs', 'end docs')
-	docs.replaceToken('readme-test-case', 'My Code Block 2', 'My Code Block')
 	docs.write()
 })
 
