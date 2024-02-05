@@ -28,7 +28,3 @@ afterAll(() => {
 	docs.replaceToken('readme-setup', '../lib/index', 'update-docs')
 	docs.write()
 })
-
-// start docs My Code Block 2
-// {{sum}}
-// end docs My Code Block 2
