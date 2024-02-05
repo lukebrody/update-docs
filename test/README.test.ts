@@ -24,7 +24,12 @@ test('addition', () => {
 })
 // end docs readme-test-case
 
+// start docs readme-save
 afterAll(() => {
+	// end docs readme-save
 	docs.replaceToken('readme-setup', '../lib/index', 'update-docs')
+	// eslint-disable-next-line indent
+// start docs readme-save
 	docs.write()
 })
+// end docs readme-save

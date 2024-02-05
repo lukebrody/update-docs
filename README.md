@@ -50,7 +50,7 @@ beforeAll(() => {
 
 <!---readme-test-case-->
 
-```javascript
+```typescript
 test('addition', () => {
     // start docs My Code Block
     const sum = 2 + 2
@@ -58,6 +58,16 @@ test('addition', () => {
     // end docs My Code Block
     expect(sum).toBe(4)
     docs.replaceToken('My Code Block', '{{' + 'sum' + '}}', sum)
+})
+```
+
+### 4. Save changes
+
+<!---readme-save-->
+
+```typescript
+afterAll(() => {
+    docs.write()
 })
 ```
 
