@@ -57,7 +57,7 @@ test('addition', () => {
     sum // {{sum}}
     // end docs My Code Block
     expect(sum).toBe(4)
-    docs.replaceToken('My Code Block', '{{' + 'sum' + '}}', sum.toString())
+    docs.replaceToken('My Code Block', '{{' + 'sum' + '}}', sum)
 })
 ```
 
