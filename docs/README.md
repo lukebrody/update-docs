@@ -1,3 +1,5 @@
+update-docs / [Exports](modules.md)
+
 # update-docs
 
 `update-docs` allows you to use test cases to populate and update your documentation examples.
@@ -74,7 +76,7 @@ sum // 4
 
 Now, when your run your test, `UpdateDocs` will update the code samples in your documentation, run the tests, and replace any tokens with their results.
 
-See the [`UpdateDocs` class](docs/classes/UpdateDocs.md) for more API documentation.
+See the [`UpdateDocs` class](docs/classes/UpdateDocs.html) for more API documentation.
 
 This README is generated using `update-docs`! See [README.test.ts](test/README.test.ts) for that implementation.
 
