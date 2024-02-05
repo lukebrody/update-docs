@@ -3,8 +3,8 @@ import { beforeAll, afterAll, test, expect } from 'vitest'
 import { UpdateDocs } from '../lib/index'
 
 const docs = new UpdateDocs({
-	documentationGlobs: ['README.md', 'test/example.md'],
-	testGlobs: ['test/README.test.ts'],
+	documentationGlobs: ['**/*.md'],
+	testGlobs: ['test/**.test.ts'],
 	modifyIndent: indent => indent.replace(/\t/g, '    ')
 })
 
