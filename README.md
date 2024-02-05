@@ -32,17 +32,18 @@ npm install -D update-docs
 <!---readme-setup-->
 
 ```typescript
-import { UpdateDocs } from "update-docs";
+import { UpdateDocs } from 'update-docs'
 
 const docs = new UpdateDocs({
-  documentationGlobs: ["README.md", "test/example.md"],
-  testGlobs: ["test/README.test.ts"],
-  indent: "  ",
-});
+	documentationGlobs: ['README.md', 'test/example.md'],
+	testGlobs: ['test/README.test.ts'],
+	indent: '\t'
+})
 
 beforeAll(() => {
-  docs.updateExamples();
-});
+	docs.updateExamples()
+})
+
 ```
 
 ### 3. Write a test case
@@ -50,14 +51,14 @@ beforeAll(() => {
 <!---readme-test-case-->
 
 ```javascript
-test("addition", () => {
-  // start docs My Code Block
-  const sum = 2 + 2;
-  sum; // {{sum}}
-  // end docs My Code Block
-  expect(sum).toBe(4);
-  docs.replaceToken("My Code Block", "{{" + "sum" + "}}", sum.toString());
-});
+test('addition', () => {
+	// start docs My Code Block
+	const sum = 2 + 2
+	sum // {{sum}}
+	// end docs My Code Block
+	expect(sum).toBe(4)
+	docs.replaceToken('My Code Block', '{{' + 'sum' + '}}', sum.toString())
+})
 ```
 
 ### My Code Block
@@ -65,8 +66,8 @@ test("addition", () => {
 <!---My Code Block-->
 
 ```typescript
-const sum = 2 + 2;
-sum; // 4
+const sum = 2 + 2
+sum // 4
 ```
 
 ### That's it!
