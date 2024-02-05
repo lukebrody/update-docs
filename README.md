@@ -37,7 +37,7 @@ import { UpdateDocs } from 'update-docs'
 const docs = new UpdateDocs({
 	documentationGlobs: ['README.md', 'test/example.md'],
 	testGlobs: ['test/README.test.ts'],
-	indent: '\t'
+	indent: '    '
 })
 
 beforeAll(() => {
