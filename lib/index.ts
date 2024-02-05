@@ -87,7 +87,6 @@ export class UpdateDocs {
 	 * {@link UpdateDocs} will not save any changes unless this is called.
 	 */
 	write() {
-		console.log({ write: this.documentationFiles, id: this.id })
 		for (const { path, contents } of this.documentationFiles) {
 			fs.writeFileSync(path, contents)
 		}
@@ -190,7 +189,6 @@ export class UpdateDocs {
 				const [, header, content, end] = args as string[]
 				count += Array.from(content.matchAll(token as RegExp)).length
 				const replacedContent = content.replaceAll(token, stringValue)
-				console.log({replacedContent, id: this.id})
 				return [header, replacedContent, end].join('')
 			})
 		}
