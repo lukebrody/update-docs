@@ -30,12 +30,11 @@ type File = { readonly path: string; contents: string }
 export class UpdateDocs {
 	documentationGlobs: string[]
 	testGlobs: string[]
-	indent: string
+	valueIndent: string
+	modifyIndent: (indent: string) => string
 
 	private documentationFiles: File[] = []
 	private testFiles: File[] = []
-
-	private id = Math.random()
 
 	/**
 	 * Creates a UpdateDocs object. 
@@ -44,20 +43,24 @@ export class UpdateDocs {
 	 * @param config
 	 * @param config.documentationGlobs - Globs that specify where the documentation files live. `UpdateDocs` will load these during this constructor.
 	 * @param config.testGlobs - Globs that specifies where the test files live. `UpdateDocs` will load these during this constructor.
-	 * @param config.indent - Controls how object and array values are formatted in `replaceToken`
+	 * @param config.valueIndent - Controls how object and array values are formatted in `replaceToken`
+	 * @param config.modifyIndent - A function that maps an indent in the test file to an indent in the documentation.
 	 */
 	constructor({
 		documentationGlobs,
 		testGlobs,
-		indent,
+		valueIndent = '  ',
+		modifyIndent = i => i,
 	}: {
 		documentationGlobs: string[]
 		testGlobs: string[]
-		indent: string
+		valueIndent?: string
+		modifyIndent?: (indent: string) => string
 	}) {
 		this.documentationGlobs = documentationGlobs
 		this.testGlobs = testGlobs
-		this.indent = indent
+		this.valueIndent = valueIndent
+		this.modifyIndent = modifyIndent
 		this.read()
 	}
 
@@ -120,7 +123,7 @@ export class UpdateDocs {
 			for (const [, indent, exampleName, code] of text.matchAll(
 				this.codeBlockInTests(),
 			)) {
-				const dedentedCode = code.replaceAll(new RegExp(`^${indent}`, 'gm'), '')
+				const dedentedCode = code.replaceAll(new RegExp(`^${indent}`, 'gm'), '').replaceAll(/[^\S\n]*/g, this.modifyIndent)
 				result.get(exampleName).push(dedentedCode)
 				scan(dedentedCode)
 			}
@@ -167,7 +170,7 @@ export class UpdateDocs {
 	stringifyValue(value: unknown): string {
 		return typeof value === 'string'
 			? value
-			: stringify(value, { indent: this.indent, margins: true })
+			: stringify(value, { indent: this.valueIndent, margins: true })
 	}
 
 	/**

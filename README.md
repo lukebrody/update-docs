@@ -35,13 +35,13 @@ npm install -D update-docs
 import { UpdateDocs } from 'update-docs'
 
 const docs = new UpdateDocs({
-	documentationGlobs: ['README.md', 'test/example.md'],
-	testGlobs: ['test/README.test.ts'],
-	indent: '    '
+    documentationGlobs: ['README.md', 'test/example.md'],
+    testGlobs: ['test/README.test.ts'],
+    modifyIndent: indent => indent.replace(/\t/g, '    ')
 })
 
 beforeAll(() => {
-	docs.updateExamples()
+    docs.updateExamples()
 })
 
 ```
@@ -52,12 +52,12 @@ beforeAll(() => {
 
 ```javascript
 test('addition', () => {
-	// start docs My Code Block
-	const sum = 2 + 2
-	sum // {{sum}}
-	// end docs My Code Block
-	expect(sum).toBe(4)
-	docs.replaceToken('My Code Block', '{{' + 'sum' + '}}', sum.toString())
+    // start docs My Code Block
+    const sum = 2 + 2
+    sum // {{sum}}
+    // end docs My Code Block
+    expect(sum).toBe(4)
+    docs.replaceToken('My Code Block', '{{' + 'sum' + '}}', sum.toString())
 })
 ```
 
